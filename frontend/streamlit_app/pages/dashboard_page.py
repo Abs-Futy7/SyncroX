@@ -65,10 +65,10 @@ st.set_page_config(
     
 )
 
-# Apply custom CSS for Raleway font, new color scheme & SyncroX theme
+# Apply custom CSS matching app.py theme
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap');
     
     * {
         font-family: 'Raleway', sans-serif !important;
@@ -76,48 +76,47 @@ st.markdown("""
     }
     
     .stApp {
-        background-color: #f1f5f9;
-        color: #1e293b;
+        background-color: #ebfbee;
     }
     
     .main {
-        background-color: #f1f5f9;
-        padding-top: 1rem;
+        background-color: #ebfbee;
     }
     
     [data-testid="stSidebar"] {
         background-color: #d3f9d8;
-        border-right: 2px solid #087f5b;
     }
     
     /* Sidebar text colors */
+    [data-testid="stSidebar"] h3 {
+        color: #000000 !important;
+    }
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] span,
     [data-testid="stSidebar"] div,
     [data-testid="stSidebar"] label {
         color: #000000 !important;
     }
-    
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'JetBrains Mono', 'Roboto Mono', monospace !important;
-        color: #0f172a !important;
-        text-transform: uppercase;
-        letter-spacing: -0.5px;
+    [data-testid="stSidebar"] .stMarkdown {
+        color: #000000 !important;
     }
     
-    h1 { font-size: 2.2rem !important; border-bottom: 3px solid #0f172a; padding-bottom: 0.5rem; margin-bottom: 1.5rem !important; }
-    h2 { font-size: 1.8rem !important; border-bottom: 2px solid #334155; padding-bottom: 0.3rem; }
-    h3 { font-size: 1.4rem !important; }
-    h4 { font-size: 1.1rem !important; }
-
-    p, div, span, label, table, tr, td {
+    /* Sidebar info/alert box text */
+    [data-testid="stSidebar"] [data-testid="stNotificationContentInfo"] {
+        color: #000000 !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6, p, div, span, label, button {
         font-family: 'Raleway', sans-serif !important;
-        color: #334155;
     }
-
-    /* Data display styling */
-    span.stMetricValue, .stMetric div, [data-testid="stMetricValue"], code, pre {
-        font-family: 'JetBrains Mono', 'Roboto Mono', monospace !important;
+    
+    h1 { font-size: 3rem !important; color: #087f5b !important; }
+    h2 { font-size: 2.5rem !important; color: #087f5b !important; }
+    h3 { font-size: 2rem !important; color: #6b7280 !important; }
+    h4 { font-size: 1.5rem !important; color: #6b7280 !important; }
+    
+    p, div, span, label {
+        color: #2b8a3e !important;
     }
 
     /* Sidebar headings */
@@ -138,7 +137,7 @@ st.markdown("""
     /* Sidebar navigation buttons */
     [data-testid="stSidebar"] button {
         background-color: #087f5b !important;
-        color: #000000 !important;
+        color: #ebfbee !important;
         border-radius: 8px !important;
         border: none !important;
         font-weight: 700 !important;
@@ -146,22 +145,9 @@ st.markdown("""
         padding: 0.6rem 1rem !important;
         font-size: 1.3rem !important;
     }
-    [data-testid="stSidebar"] button p,
-    [data-testid="stSidebar"] button span,
-    [data-testid="stSidebar"] button div,
-    [data-testid="stSidebar"] button * {
-        color: #000000 !important;
-        font-size: 1.2rem !important;
-    }
     [data-testid="stSidebar"] button:hover {
         background-color: #006E6D !important;
-        color: #000000 !important;
-    }
-    [data-testid="stSidebar"] button:hover p,
-    [data-testid="stSidebar"] button:hover span,
-    [data-testid="stSidebar"] button:hover div,
-    [data-testid="stSidebar"] button:hover * {
-        color: #000000 !important;
+        color: #ebfbee !important;
     }
 
     /* Disabled nav (current page) */
@@ -169,9 +155,6 @@ st.markdown("""
         background-color: #b2f2bb !important;
         color: #087f5b !important;
         opacity: 0.9 !important;
-    }
-    [data-testid="stSidebar"] button[disabled] * {
-        color: #087f5b !important;
     }
 
     /* Logout secondary button */
@@ -181,25 +164,19 @@ st.markdown("""
         border: 2px solid #087f5b !important;
         font-size: 1.1rem !important;
     }
-    button[kind="secondary"] * {
-        color: #087f5b !important;
-    }
     button[kind="secondary"]:hover {
         border-color: #006E6D !important;
         background-color: #d3f9d8 !important;
     }
-    button[kind="secondary"]:hover * {
-        color: #087f5b !important;
-    }
 
-    /* Global primary buttons (if any) */
+    /* Global primary buttons */
     div.stButton > button {
         background-color: #087f5b !important;
         color: #ebfbee !important;
         border-radius: 8px !important;
         border: none !important;
         font-weight: 800 !important;
-        font-size: 1.1rem !important;
+        font-size: 1.3rem !important;
         padding: 0.6rem 1rem !important;
     }
     div.stButton > button:hover {
@@ -207,13 +184,14 @@ st.markdown("""
         color: #ebfbee !important;
     }
 
-    /* Expander styling (for error details, metrics, concepts) */
+    /* Expander styling */
     details {
-        border-radius: 10px;
+        border-radius: 12px;
         border: 2px solid #087f5b;
         background-color: #d3f9d8;
         margin-bottom: 12px;
         transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(8, 127, 91, 0.15);
     }
     summary {
         color: #087f5b !important;
@@ -221,119 +199,165 @@ st.markdown("""
         padding: 0.75rem;
         cursor: pointer;
         font-size: 1.6rem !important;
-        border: 1px solid black;
     }
     summary:hover {
         color: #006E6D !important;
     }
     details[open] {
         border-color: #006E6D;
-        box-shadow: 0 0 20px rgba(8, 127, 91, 0.25);
+        box-shadow: 0 0 20px rgba(8, 127, 91, 0.35);
     }
 
-    /* Captions / subtle text */
+    /* Captions */
     .stCaption, .stMarkdown small {
         color: #2b8a3e !important;
         font-size: 1rem !important;
     }
     
-    /* Metric cards enhancement */
+    /* Metric cards matching app.py */
+    [data-testid="stMetric"] {
+        background-color: #d3f9d8 !important;
+        padding: 20px !important;
+        border-radius: 14px !important;
+        border: 2px solid #087f5b !important;
+        box-shadow: 0px 0px 12px rgba(8, 127, 91, 0.2);
+    }
+    [data-testid="stMetric"]:hover {
+        border-color: #006E6D !important;
+        box-shadow: 0px 0px 20px rgba(8, 127, 91, 0.35);
+    }
+    [data-testid="stMetric"] label {
+        color: #374151 !important;
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+    }
     [data-testid="stMetricValue"] {
+        color: #1f2937 !important;
         font-size: 2.2rem !important;
         font-weight: 700 !important;
-        color: #0f172a !important;
-        letter-spacing: -1px;
     }
-    
     [data-testid="stMetricLabel"] {
-        font-size: 0.85rem !important;
-        font-weight: 700 !important;
-        color: #475569 !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    [data-testid="stMetric"] {
-        background-color: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 4px !important;
-        padding: 1rem !important;
-        box-shadow: none !important;
+        color: #374151 !important;
     }
     
     /* Server status card */
     .server-card {
-        background: linear-gradient(135deg, #d3f9d8 0%, #b2f2bb 100%);
+        background: #d3f9d8;
         border: 2px solid #087f5b;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 20px;
         transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(8, 127, 91, 0.15);
     }
     
     .server-card:hover {
-        border-color: rgba(3, 192, 132, 0.5);
-        box-shadow: 0 4px 20px rgba(3, 192, 132, 0.15);
-        transform: translateY(-2px);
+        border-color: #006E6D;
+        box-shadow: 0 0 22px rgba(8, 127, 91, 0.45);
+        transform: translateY(-4px);
     }
     
-    /* Chart container styling */
+    /* Chart container */
     .chart-container {
-        background-color: #020617;
-        border: 1px solid rgba(55, 65, 81, 0.5);
+        background-color: #ffffff;
+        border: 2px solid #087f5b;
         border-radius: 12px;
         padding: 1.5rem;
         margin: 1rem 0;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 10px rgba(8, 127, 91, 0.15);
     }
     
     /* Dataframe styling */
     [data-testid="stDataFrame"] {
-        border: 1px solid rgba(55, 65, 81, 0.5);
+        border: 2px solid #087f5b;
         border-radius: 8px;
         overflow: hidden;
     }
     
+    /* Table styling - dark text */
+    table {
+        color: #1f2937 !important;
+    }
+    table th {
+        color: #0f172a !important;
+        font-weight: 700 !important;
+        background-color: #d3f9d8 !important;
+    }
+    table td {
+        color: #1f2937 !important;
+        font-weight: 600 !important;
+    }
+    .dataframe {
+        color: #1f2937 !important;
+    }
+    .dataframe th {
+        color: #0f172a !important;
+        font-weight: 700 !important;
+    }
+    .dataframe td {
+        color: #1f2937 !important;
+        font-weight: 600 !important;
+    }
+    
     /* Section headers */
     .section-header {
-        border-bottom: 2px solid rgba(3, 192, 132, 0.3);
+        border-bottom: 3px solid #087f5b;
         padding-bottom: 0.5rem;
         margin-bottom: 1.5rem;
     }
-    
-    /* Info boxes enhancement */
-    .stInfo {
-        background: linear-gradient(135deg, rgba(3, 192, 132, 0.1) 0%, rgba(3, 192, 132, 0.05) 100%) !important;
-        border-left: 4px solid #03C084 !important;
-        border-radius: 8px;
+    .section-header h2, .section-header h3, .section-header h4 {
+        color: #087f5b !important;
+        font-weight: 700 !important;
     }
     
-    /* Success boxes enhancement */
+    /* Info boxes */
+    .stInfo {
+        background-color: #d3f9d8 !important;
+        border-left: 4px solid #087f5b !important;
+        border-radius: 8px;
+        color: #087f5b !important;
+    }
+    
+    /* Success boxes */
     .stSuccess {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%) !important;
+        background-color: #d3f9d8 !important;
         border-left: 4px solid #10b981 !important;
         border-radius: 8px;
+        color: #087f5b !important;
     }
     
-    /* Error boxes enhancement */
+    /* Error boxes */
     .stError {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%) !important;
+        background-color: #ffe5e5 !important;
         border-left: 4px solid #ef4444 !important;
+        border-radius: 8px;
+    }
+    
+    /* Warning boxes */
+    .stWarning {
+        background-color: #fff4e5 !important;
+        border-left: 4px solid #f59e0b !important;
         border-radius: 8px;
     }
     
     /* Selectbox styling */
     [data-testid="stSelectbox"] {
-        background-color: #020617 !important;
+        background-color: #d3f9d8 !important;
         border-radius: 8px;
+        border: 2px solid #087f5b !important;
     }
     
     /* Divider styling */
     hr {
         margin: 2rem 0;
         border: none;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(3, 192, 132, 0.3), transparent);
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #087f5b, transparent);
+    }
+    
+    /* Toggle switch */
+    [data-testid="stCheckbox"] {
+        color: #087f5b !important;
     }
 
 </style>
@@ -362,34 +386,34 @@ def check_tcp_server(host: str, port: int, timeout: float = 0.5):
         return False, None, str(e)
 
 
-# ---- Server Status Section (Collapsed by default) ----
-with st.expander("System Server Status", expanded=False):
-    st.markdown('<div class="section-header"><h4>Detailed Service Monitoring</h4></div>', unsafe_allow_html=True)
-    
-    services = [
-        ("Chat Server", "Real-time messaging over TCP", SERVER_HOST, CHAT_PORT),
-        ("File Server", "File transfer with congestion control", SERVER_HOST, FILE_PORT),
-        ("Collab Server", "Shared code editor and sync", SERVER_HOST, COLLAB_PORT),
-        ("Exec Server", "Docker-sandboxed code execution", SERVER_HOST, EXEC_PORT),
-        ("Room Mgmt", "Central room authority", SERVER_HOST, ROOM_MGMT_PORT),
-    ]
-    
-    cols = st.columns(2)
-    for i, (name, desc, h, p) in enumerate(services):
-        with cols[i % 2]:
-            ok, latency_ms, err = check_tcp_server(h, p, timeout=0.7)
+# ---- Server Status Section ----
+st.markdown('<div class="section-header"><h2>🖥️ System Server Status</h2></div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header"><h4>Detailed Service Monitoring</h4></div>', unsafe_allow_html=True)
+
+services = [
+    ("Chat Server", "Real-time messaging over TCP", SERVER_HOST, CHAT_PORT),
+    ("File Server", "File transfer with congestion control", SERVER_HOST, FILE_PORT),
+    ("Collab Server", "Shared code editor and sync", SERVER_HOST, COLLAB_PORT),
+    ("Exec Server", "Docker-sandboxed code execution", SERVER_HOST, EXEC_PORT),
+    ("Room Mgmt", "Central room authority", SERVER_HOST, ROOM_MGMT_PORT),
+]
+
+cols = st.columns(2)
+for i, (name, desc, h, p) in enumerate(services):
+    with cols[i % 2]:
+        ok, latency_ms, err = check_tcp_server(h, p, timeout=0.7)
+        
+        with st.container():
+            st.markdown(f"**{name}**")
+            st.caption(f"`{h}:{p}` • {desc}")
             
-            with st.container():
-                st.markdown(f"**{name}**")
-                st.caption(f"`{h}:{p}` • {desc}")
-                
-                if ok:
-                    st.success(f"Online • {latency_ms:.1f}ms latency")
-                else:
-                    st.error("Offline")
-                    if err:
-                        with st.expander("Error details"):
-                            st.code(err, language="text")
+            if ok:
+                st.success(f"Online • {latency_ms:.1f}ms latency")
+            else:
+                st.error("Offline")
+                if err:
+                    with st.expander("Error details"):
+                        st.code(err, language="text")
 
 st.markdown("---")
 
